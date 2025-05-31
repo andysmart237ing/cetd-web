@@ -1,5 +1,5 @@
 ---
-title: Bienvennue chez CETD
+title: Site internet de CETD
 ---
 
-Le Cabinet d'Etudes et Développement basé à Ngousso (Yaoundé-Cameroun).
+Le Cabinet d'Etudes Technique et de Développement basé à Ngousso (Yaoundé-Cameroun).
