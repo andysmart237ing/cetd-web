@@ -937,7 +937,7 @@
                 </div>
                 <div class="contact-form">
                     <h3>Envoyez-nous un message</h3>
-                    <form>
+                    <form action="https://formsubmit.co/cetd.cameroun@yahoo.fr" method="POST"> 
                         <div class="form-group">
                             <label for="name">Nom complet</label>
                             <input type="text" id="name" class="form-control" required>
@@ -1105,11 +1105,75 @@
         contactForm.addEventListener('submit', function(e) {
             e.preventDefault();
             
-            // Form validation would go here
+            const emailInput = document.getElementById('email');
+            const nameInput = document.getElementById('name');
+            const subjectInput = document.getElementById('subject');
+            const messageInput = document.getElementById('message');
+
+            function validateEmail(email) {
+                const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                return re.test(email);
+            }
+
+            contactForm.addEventListener('submit', function(e) {
+                let valid = true;
+
+                if (!nameInput.value.trim()) {
+                    alert('Veuillez entrer votre nom.');
+                    valid = false;
+                }
+
+                if (!validateEmail(emailInput.value.trim())) {
+                    alert('Veuillez entrer une adresse email valide.');
+                    valid = false;
+                }
+
+                if (!subjectInput.value.trim()) {
+                    alert('Veuillez entrer un sujet.');
+                    valid = false;
+                }
+
+                if (!messageInput.value.trim()) {
+                    alert('Veuillez entrer un message.');
+                    valid = false;
+                }
+
+                if (!valid) {
+                    e.preventDefault();
+                } else {
+                    fetch('https://formsubmit.co/ajax/cetd.cameroun@yahoo.fr', {
+                        method: 'POST',
+                        headers: { 
+                            'Content-Type': 'application/json',
+                            'Accept': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            name: nameInput.value,
+                            email: emailInput.value,
+                            subject: subjectInput.value,
+                            message: messageInput.value
+                        })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            alert('Merci pour votre message! Nous vous contacterons très bientôt.');
+                            contactForm.reset();
+                        } else {
+                            alert('Une erreur s\'est produite. Veuillez réessayer plus tard.');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        alert('Une erreur s\'est produite. Veuillez réessayer plus tard.');
+                    });
+                    contactForm.reset();
+                }
+            });
             
-            // Simulate form submission
-            alert('Merci pour votre message! Nous vous contacterons très bientôt.');
-            contactForm.reset();
+            // // Simulate form submission
+            // alert('Merci pour votre message! Nous vous contacterons très bientôt.');
+            // contactForm.reset();
         });
     </script>
 </body>
